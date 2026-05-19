@@ -18,8 +18,8 @@ const pdfScenarios: ScenarioItem[] = [
   {
     id: "k1",
     name: "Kịch bản 1: Cắt cứng",
-    desc: "Cắt 30% back-office đều mọi phòng ban.",
-    impactDesc: "Tiết kiệm 84 tỷ/năm; Mất 18% năng suất Q1; phục hồi sau 4 tháng. 300 NV bị cắt; 12 NV được giữ nhờ pháp lý.",
+    desc: "Cắt 30% nhân sự hỗ trợ, admin và test thủ công.",
+    impactDesc: "Tiết kiệm 84 tỷ/năm; Mất 18% năng suất release phần mềm Q1; 12 người được giữ nhờ pháp lý.",
     costChange: -84,
     revChange: -120, // Tạm map
     churnChange: 2,
@@ -28,8 +28,8 @@ const pdfScenarios: ScenarioItem[] = [
   {
     id: "k2",
     name: "Kịch bản 2: Bảo vệ Top Talent",
-    desc: "Cắt 30% nhưng giữ 100% nhân sự kỹ thuật cao, dồn cắt phòng phi kỹ thuật.",
-    impactDesc: "Tiết kiệm 70 tỷ/năm; Năng suất giảm 8%, phục hồi 2 tháng; bảo toàn nhân tài nòng cốt.",
+    desc: "Giữ 100% nhân sự Coder/BA/PM Nòng cốt, dồn cắt các bộ phận phi kỹ thuật.",
+    impactDesc: "Tiết kiệm 70 tỷ/năm; Năng suất giảm 8%, phục hồi 2 tháng; bảo toàn hoàn toàn đội ngũ R&D.",
     costChange: -70,
     revChange: -40,
     churnChange: 0.5,
@@ -38,8 +38,8 @@ const pdfScenarios: ScenarioItem[] = [
   {
     id: "k3",
     name: "Kịch bản 3: Upskilling",
-    desc: "Cắt 20% + dùng phần tiết kiệm đầu tư đào tạo lại (upskill).",
-    impactDesc: "Tiết kiệm thuần 35 tỷ/năm; engagement tăng; rủi ro kiện tụng thấp. 200 nghỉ, 80 chuyển vai trò.",
+    desc: "Cắt 20% + dùng phần tiết kiệm đầu tư dạy Manual Tester thành Automation.",
+    impactDesc: "Tiết kiệm thuần 35 tỷ/năm; engagement tăng mạnh; rủi ro pháp lý thấp. 200 nghỉ, 80 lên vị trí mới.",
     costChange: -35,
     revChange: +15,
     churnChange: -1.0,
@@ -47,9 +47,9 @@ const pdfScenarios: ScenarioItem[] = [
   },
   {
     id: "k4",
-    name: "Kịch bản 4: Shared Service",
-    desc: "Hợp nhất 3 phòng kế toán của 3 CT con thành 1 trung tâm SSC.",
-    impactDesc: "Tiết kiệm 42 tỷ/năm; cải thiện 60% tốc độ đóng sổ; cần 6 tháng triển khai SSC.",
+    name: "Kịch bản 4: Shared Service Support",
+    desc: "Hợp nhất 3 đội Customer Support của 3 chi nhánh (Bắc-Trung-Nam) thành 1 trung tâm.",
+    impactDesc: "Tiết kiệm 42 tỷ/năm; cải thiện 60% tốc độ đóng ticket hỗ trợ khách hàng.",
     costChange: -42,
     revChange: +5,
     churnChange: 0,

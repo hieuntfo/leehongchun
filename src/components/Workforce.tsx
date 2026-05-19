@@ -4,14 +4,14 @@ import { AlertTriangle, Info, Search, X, CheckCircle2, SlidersHorizontal, UserMi
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, ReferenceLine } from 'recharts';
 
 const mockReductions = [
-  { id: 'NV001245', name: 'Nguyễn Văn A', role: 'Chuyên viên kế toán', perf: '52/100', prod: '0.62', strat: 'Kế toán tay', score: 34.2 },
-  { id: 'NV001899', name: 'Lê Thị B', role: 'Nhân viên Hành chính', perf: '55/100', prod: '0.65', strat: 'Trung bình', score: 36.8 },
+  { id: 'NV001245', name: 'Nguyễn Văn A', role: 'Chuyên viên Manual QC', perf: '52/100', prod: '0.62', strat: 'Test thủ công', score: 34.2 },
+  { id: 'NV001899', name: 'Lê Thị B', role: 'Nhân viên Support T1', perf: '55/100', prod: '0.65', strat: 'Trung bình', score: 36.8 },
   { id: 'NV002102', name: 'Trần Văn C', role: 'Chuyên viên Tuyển dụng', perf: '58/100', prod: '0.70', strat: 'Trung bình', score: 41.5 },
 ];
 
 const mockRetentions = [
-  { id: 'NV000812', name: 'Phạm Minh D', role: 'Kế toán trưởng', perf: '95/100', prod: '1.42', strat: 'Nòng cốt', score: 92.1 },
-  { id: 'NV000504', name: 'Hoàng Thị E', role: 'Chuyên gia BI', perf: '92/100', prod: '1.30', strat: 'Cốt lõi CĐS', score: 89.5 },
+  { id: 'NV000812', name: 'Phạm Minh D', role: 'Solution Architect', perf: '95/100', prod: '1.42', strat: 'Nòng cốt', score: 92.1 },
+  { id: 'NV000504', name: 'Hoàng Thị E', role: 'Senior Data Engineer', perf: '92/100', prod: '1.30', strat: 'Cốt lõi AI', score: 89.5 },
 ];
 
 const shapData = [
@@ -193,12 +193,12 @@ export default function Workforce({}: WDEProps) {
                   <ul className="text-sm text-gray-700 space-y-2 mb-4">
                     <li className="flex items-start"><span className="text-red-500 mr-2 mt-0.5 block">↓</span> <strong>Hiệu suất 12 tháng:</strong> 52/100 (vs TB phòng 78) → giảm 15.6 điểm</li>
                     <li className="flex items-start"><span className="text-red-500 mr-2 mt-0.5 block">↓</span> <strong>Năng suất ROI:</strong> 0.62 (vs Benchmark 1.0) → giảm 7.4 điểm</li>
-                    <li className="flex items-start"><span className="text-red-500 mr-2 mt-0.5 block">↓</span> <strong>Kỹ năng chiến lược:</strong> Kỹ năng kế toán tay sẽ bị thay thế bởi automation → giảm 5.2 điểm</li>
+                    <li className="flex items-start"><span className="text-red-500 mr-2 mt-0.5 block">↓</span> <strong>Kỹ năng chiến lược:</strong> Kỹ năng test thủ công (Manual QC) đang bị thay thế bởi Automated Testing → giảm 5.2 điểm</li>
                   </ul>
                   
                   <div className="bg-blue-50 text-blue-800 p-3 rounded-lg text-sm border border-blue-100 flex items-start">
                     <Info size={16} className="text-blue-500 mr-2 mt-0.5 flex-shrink-0" />
-                    <p><strong>Khuyến nghị AI:</strong> Cân nhắc <em>upskilling</em> sang vai trò Data Analyst (đào tạo 6 tháng) thay vì sa thải ngay do thâm niên đóng góp 8 năm.</p>
+                    <p><strong>Khuyến nghị AI:</strong> Cân nhắc <em>upskilling</em> sang vai trò Automation Engineer (đào tạo 6 tháng) thay vì sa thải ngay do thâm niên đóng góp 8 năm hiểu rõ nghiệp vụ (domain knowledge).</p>
                   </div>
                 </div>
               </div>

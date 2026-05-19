@@ -84,9 +84,9 @@ export default function Dashboard() {
             </div>
           </div>
           <div>
-            <p className="text-sm text-gray-600 font-medium">Tồn kho dư thừa (Slow-moving)</p>
+            <p className="text-sm text-gray-600 font-medium">Doanh thu chưa nghiệm thu (Unbilled)</p>
             <p className="text-2xl font-bold text-gray-900 leading-tight mt-1">187 tỷ ₫</p>
-            <p className="text-xs text-green-600 font-medium mt-2 flex items-center"><TrendingDown size={12} className="mr-1"/> -32% QoQ* (↓ 5% tồn kho chung)</p>
+            <p className="text-xs text-green-600 font-medium mt-2 flex items-center"><TrendingDown size={12} className="mr-1"/> -15% QoQ* (Tiến độ dự án cải thiện)</p>
           </div>
         </div>
 
@@ -108,7 +108,7 @@ export default function Dashboard() {
         {/* Chart */}
         <div className="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
           <div className="flex justify-between items-center mb-6">
-            <h3 className="text-base font-semibold text-gray-800">Doanh thu hợp nhất 10 công ty con</h3>
+            <h3 className="text-base font-semibold text-gray-800">Doanh thu hợp nhất Tập đoàn (License + Dịch vụ)</h3>
             <select className="bg-gray-50 border border-gray-200 text-sm rounded-lg px-3 py-1.5 focus:outline-none">
               <option>Năm 2026</option>
               <option>Năm 2025</option>
@@ -138,10 +138,10 @@ export default function Dashboard() {
           </h3>
           <div className="space-y-3 flex-1 overflow-auto">
             {[
-              { id: 'SX-1', text: 'Tồn kho thép giảm 22%, đề xuất nhập thêm trong 5 ngày.', type: 'critical' },
-              { id: 'TM-2', text: 'Doanh số tháng giảm 18% — phát hiện bất thường (Anomaly Detection).', type: 'warning' },
-              { id: 'KS', text: 'Công ty con Khách sạn: chi phí điện tăng 35% — cần kiểm tra hóa đơn.', type: 'warning' },
-              { id: 'HR', text: 'Dự báo năng suất giảm (Productivity Dip) tại nhà máy do triển khai ERP mới.', type: 'info', color: 'blue' }
+              { id: 'TK-HCM', text: 'Tiến độ dự án ERP khách hàng trọng điểm chậm 12%, đề xuất bổ sung 2 BA.', type: 'critical' },
+              { id: 'KD-HN', text: 'Doanh số bán thêm (up-sell) License giảm 18% — phát hiện bất thường (Anomaly Detection).', type: 'warning' },
+              { id: 'R&D', text: 'Khối R&D: chi phí Cloud Server (AWS) tăng 35% — cần kiểm tra môi trường test.', type: 'warning' },
+              { id: 'HR', text: 'Dự báo năng suất team Dev giảm tạm thời do training kiến trúc Framework mới.', type: 'info', color: 'blue' }
             ].map((alert, i) => (
               <div key={i} className={`p-4 rounded-lg border-l-4 shadow-sm text-sm bg-white border ${
                 alert.type === 'critical' ? 'border-l-red-500 border-gray-100' : 

@@ -38,7 +38,7 @@ export default function Timeline() {
         <div className="relative z-10 max-w-xl">
           <p className="text-blue-200 text-xs font-bold uppercase tracking-widest mb-3 border-l-2 border-[#FFC857] pl-3">Trường hợp minh họa (Use case)</p>
           <h2 className="text-white font-black text-2xl md:text-3xl leading-snug drop-shadow-sm">
-            "Có nên đầu tư dây chuyền mới 80 tỷ vào Công ty SX-1?"
+            "Có nên đầu tư 80 tỷ phát triển nền tảng SaaS ERP Multi-tenant mới?"
           </h2>
         </div>
         

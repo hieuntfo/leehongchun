@@ -23,10 +23,10 @@ export default function AIQA() {
   }, [messages, isTyping]);
 
   const suggestions = [
-    "Doanh thu công ty con SX-1 tháng này so với cùng kỳ năm ngoái?",
-    "Công ty con nào đang lỗ thực sự (sau khi loại trừ giao dịch nội bộ)?",
-    "Top 5 sản phẩm mang lại biên lợi nhuận (gross margin) cao nhất quý 3?",
-    "Dự báo doanh thu Quý 4 sẽ đạt bao nhiêu? Có nên cắt giảm Marketing?"
+    "Doanh thu Chi nhánh HCM tháng này so với cùng kỳ năm ngoái?",
+    "Dự án triển khai ERP nào đang bị đội ngân sách (cost overrun) thực sự?",
+    "Top 5 phân hệ phần mềm (modules) mang lại lợi nhuận biên cao nhất quý 3?",
+    "Dự báo doanh thu nghiệm thu Quý 4 sẽ đạt bao nhiêu? Có nên giảm ngân sách Marketing?"
   ];
 
   const handleAsk = (question: string) => {
@@ -39,7 +39,7 @@ export default function AIQA() {
       if (question === suggestions[0]) {
         setMessages(prev => [...prev, { 
           role: 'bot', 
-          text: "Công ty con **SX-1** đạt **47.3 tỷ** doanh thu tháng 5/2026, **tăng 18.2%** so với cùng kỳ (40.0 tỷ).\n\nĐóng góp chính:\n• Đơn hàng XK Nhật Bản: +12 tỷ\n• Sản phẩm mới Tôn mạ kẽm cao cấp: +3 tỷ\n\n_[Nguồn: BRAVO 10 ERP, Kho dữ liệu hợp nhất. Cập nhật: 09:32 hôm nay]_",
+          text: "Chi nhánh **HCM** đạt **47.3 tỷ** doanh thu tháng 5/2026, **tăng 18.2%** so với cùng kỳ (40.0 tỷ).\n\nĐóng góp chính:\n• Nghiệm thu dự án ERP tại THACO: +12 tỷ\n• Bán thêm License Cloud SaaS: +3 tỷ\n\n_[Nguồn: BRAVO 10 ERP, Kho dữ liệu hợp nhất. Cập nhật: 09:32 hôm nay]_",
           hasChart: true
         }]);
       } else {
@@ -87,7 +87,7 @@ export default function AIQA() {
                 </div>
                 <h2 className="text-gray-900 font-bold text-2xl">Xin chào Chủ tịch,</h2>
                 <p className="text-gray-500 text-base max-w-md mx-auto leading-relaxed">
-                  Trợ lý AI đã được kết nối với toàn bộ dữ liệu hợp nhất 10 công ty con của Tập đoàn BRAVO. Anh cần báo cáo thông tin gì hôm nay?
+                  Trợ lý AI đã được kết nối với toàn bộ dữ liệu hợp nhất của Tập đoàn BRAVO. Anh cần báo cáo thông tin gì về kinh doanh dự án phần mềm hôm nay?
                 </p>
               </div>
               
