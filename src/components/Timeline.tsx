@@ -30,37 +30,36 @@ export default function Timeline() {
       </div>
 
       {/* Hero Banner */}
-      <div className="bg-gradient-to-br from-[#003B73] to-[#005B8C] p-8 rounded-2xl shadow-lg relative overflow-hidden text-white flex flex-col md:flex-row items-start md:items-center justify-between gap-6 hover:shadow-xl transition-shadow">
+      <div className="bg-gradient-to-br from-[#003B73] to-[#005B8C] p-5 sm:p-8 rounded-2xl shadow-lg relative overflow-hidden text-white flex flex-col items-start justify-between gap-4 sm:gap-6 hover:shadow-xl transition-shadow lg:flex-row lg:items-center">
         <div className="absolute -right-10 -top-10 opacity-10 pointer-events-none">
-          <Clock size={250} />
+          <Clock size={160} className="sm:w-[250px] sm:h-[250px]" />
         </div>
         
         <div className="relative z-10 max-w-xl">
-          <p className="text-blue-200 text-xs font-bold uppercase tracking-widest mb-3 border-l-2 border-[#FFC857] pl-3">Trường hợp minh họa (Use case)</p>
-          <h2 className="text-white font-black text-2xl md:text-3xl leading-snug drop-shadow-sm">
+          <p className="text-blue-200 text-[10px] sm:text-xs font-bold uppercase tracking-widest mb-2 sm:mb-3 border-l-2 border-[#FFC857] pl-3">Trường hợp minh họa (Use case)</p>
+          <h2 className="text-white font-black text-lg sm:text-2xl md:text-3xl leading-snug drop-shadow-sm">
             "Có nên đầu tư 80 tỷ phát triển nền tảng SaaS ERP Multi-tenant mới?"
           </h2>
         </div>
         
-        <div className="flex bg-white/10 rounded-2xl p-5 border border-white/20 relative z-10 backdrop-blur-md shrink-0 shadow-inner w-full md:w-auto mt-4 md:mt-0">
-          <div className="pr-6">
-            <p className="text-blue-200 text-xs font-semibold mb-1 uppercase tracking-wider">Thời gian mới</p>
-            <p className="text-white font-black text-4xl drop-shadow-md text-[#FFC857]">7.6 <span className="text-2xl font-bold text-white">giờ</span></p>
+        <div className="flex bg-white/10 rounded-2xl p-4 sm:p-5 border border-white/20 relative z-10 backdrop-blur-md shrink-0 shadow-inner w-full lg:w-auto">
+          <div className="flex-1 lg:pr-6 border-r border-white/20">
+            <p className="text-blue-200 text-[10px] sm:text-xs font-semibold mb-1 uppercase tracking-wider">Thời gian mới</p>
+            <p className="text-white font-black text-2xl sm:text-4xl drop-shadow-md text-[#FFC857]">7.6 <span className="text-sm sm:text-2xl font-bold text-white">giờ</span></p>
           </div>
-          <div className="w-px bg-white/20 mx-2"></div>
-          <div className="pl-6 relative">
-            <p className="text-blue-200 text-xs font-semibold mb-1 uppercase tracking-wider">Cách cũ</p>
-            <p className="text-red-200 font-bold text-2xl line-through opacity-70">336 giờ</p>
-            <p className="text-red-200 text-sm mt-1 opacity-70 font-medium">(= 14 ngày làm việc)</p>
+          <div className="flex-1 pl-4 lg:pl-6 relative">
+            <p className="text-blue-200 text-[10px] sm:text-xs font-semibold mb-1 uppercase tracking-wider">Cách cũ</p>
+            <p className="text-red-200 font-bold text-lg sm:text-2xl line-through opacity-70">14 ngày</p>
+            <p className="text-red-200 text-[9px] sm:text-sm mt-1 opacity-70 font-medium">(= 336 giờ)</p>
           </div>
         </div>
       </div>
 
       {/* Horizontal Timeline */}
-      <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-200 mt-8 relative">
+      <div className="bg-white p-4 sm:p-8 rounded-2xl shadow-sm border border-gray-200 mt-4 sm:mt-8 relative overflow-hidden">
         <div className="hidden md:flex absolute top-[4.5rem] left-[10%] right-[10%] h-1 bg-gray-100 z-0 rounded-full"></div>
         
-        <div className="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-6 md:gap-0 relative z-10 w-full px-2">
+        <div className="flex flex-col md:flex-row justify-between items-stretch md:items-center gap-4 md:gap-0 relative z-10 w-full">
           {stages.map((stage, index) => {
             const Icon = stage.icon;
             const isActive = activeStage.id === stage.id;
@@ -68,34 +67,33 @@ export default function Timeline() {
             
             return (
               <div key={stage.id} className="flex-1 flex flex-col items-center relative group">
-                {/* Mobile line connector */}
-                {index !== stages.length - 1 && (
-                   <div className="md:hidden h-8 w-0.5 bg-gray-200 my-1"></div>
-                )}
-                
                 <button 
                   onClick={() => setActiveStage(stage)}
-                  className="flex flex-col items-center relative z-10 outline-none w-full group transition-transform hover:-translate-y-1"
+                  className="flex flex-row md:flex-col items-center relative z-10 outline-none w-full group transition-transform hover:-translate-y-1 gap-4 md:gap-0"
                 >
-                  <div className={`w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300 border-4 z-10 ${
+                  <div className={`w-10 h-10 sm:w-14 sm:h-14 rounded-full flex items-center justify-center transition-all duration-300 border-2 sm:border-4 z-10 shrink-0 ${
                     isActive 
                     ? 'bg-[#0077B6] border-white text-white shadow-lg ring-4 ring-[#0077B6]/20 scale-110' 
                     : isPast
                     ? 'bg-blue-50 border-[#0077B6] text-[#0077B6]'
                     : 'bg-white border-gray-200 text-gray-400 group-hover:border-blue-300 group-hover:text-blue-400'
                   }`}>
-                    <Icon size={24} strokeWidth={isActive ? 2.5 : 2} />
+                    <Icon size={isActive ? 20 : 18} className="sm:w-6 sm:h-6" strokeWidth={isActive ? 2.5 : 2} />
                   </div>
-                  <div className={`mt-4 text-sm font-bold transition-colors w-24 text-center leading-tight hidden md:block ${isActive ? 'text-[#003B73]' : isPast ? 'text-gray-700' : 'text-gray-400'}`}>
-                    G.Đoạn {stage.id}<br/>{stage.name}
+                  <div className={`mt-0 md:mt-4 text-[11px] sm:text-sm font-bold transition-colors w-auto md:w-24 text-left md:text-center leading-tight sm:px-1 ${isActive ? 'text-[#003B73]' : isPast ? 'text-gray-700' : 'text-gray-400'}`}>
+                    <span className="md:hidden">BĐ {stage.id}: </span>{stage.name}
                   </div>
                   
-                  {/* Mobile Label */}
-                  <div className="md:hidden flex items-center justify-between w-full mt-2 px-6">
-                    <span className={`font-bold ${isActive ? 'text-[#0077B6]' : 'text-gray-600'}`}>{stage.name}</span>
-                    <span className="text-xs text-gray-400">{stage.timeStr}</span>
+                  {/* Mobile Time */}
+                  <div className="md:hidden ml-auto text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">
+                    {stage.timeStr}
                   </div>
                 </button>
+
+                {/* Mobile line connector */}
+                {index !== stages.length - 1 && (
+                   <div className="md:hidden absolute left-[19px] top-[40px] h-[16px] w-0.5 bg-gray-100 z-0"></div>
+                )}
               </div>
             )
           })}
@@ -110,41 +108,41 @@ export default function Timeline() {
            animate={{ opacity: 1, y: 0 }}
            exit={{ opacity: 0, y: -10 }}
            transition={{ duration: 0.2 }}
-           className="bg-white p-8 rounded-2xl shadow-md border border-gray-200 flex flex-col md:flex-row gap-8 items-center"
+           className="bg-white p-5 sm:p-8 rounded-2xl shadow-md border border-gray-200 flex flex-col md:flex-row gap-6 sm:gap-8 items-start sm:items-center"
         >
-          <div className="flex-1 w-full space-y-4">
-            <div className="flex items-center space-x-4">
-              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center ${activeStage.sysColor} bg-opacity-10 border shadow-sm`}>
-                 <activeStage.icon size={32} />
+          <div className="flex-1 w-full space-y-3 sm:space-y-4">
+            <div className="flex items-center space-x-3 sm:space-x-4">
+              <div className={`w-12 h-12 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center ${activeStage.sysColor} bg-opacity-10 border shadow-sm shrink-0`}>
+                 <activeStage.icon size={28} className="sm:w-8 sm:h-8" />
               </div>
               <div>
-                <p className="text-[#0077B6] font-bold text-sm mb-1 uppercase tracking-wider">Giai đoạn {activeStage.id}</p>
-                <h3 className="font-bold text-gray-900 text-2xl">{activeStage.name}</h3>
+                <p className="text-[#0077B6] font-bold text-[10px] sm:text-sm mb-0.5 uppercase tracking-wider">Bước {activeStage.id}</p>
+                <h3 className="font-bold text-gray-900 text-lg sm:text-2xl">{activeStage.name}</h3>
               </div>
             </div>
 
-            <div className="bg-gray-50 border border-gray-100 p-5 rounded-xl">
-              <p className="text-base text-gray-700 leading-relaxed">
+            <div className="bg-gray-50 border border-gray-100 p-4 sm:p-5 rounded-xl">
+              <p className="text-[11px] sm:text-base text-gray-700 leading-relaxed font-medium">
                 {activeStage.desc}
               </p>
               <div className="mt-4 flex flex-wrap items-center gap-2">
-                <span className="text-xs text-gray-500 font-semibold px-2 py-1 bg-white border border-gray-300 rounded shadow-sm">Hệ thống:</span>
-                <span className={`text-xs font-bold px-3 py-1.5 rounded-lg border shadow-sm ${activeStage.sysColor}`}>
+                <span className="text-[10px] sm:text-xs text-gray-500 font-bold uppercase">Hệ thống:</span>
+                <span className={`text-[10px] sm:text-xs font-bold px-2.5 py-1 rounded-md border shadow-sm ${activeStage.sysColor}`}>
                   {activeStage.sys}
                 </span>
               </div>
             </div>
           </div>
           
-          <div className="w-full md:w-72 shrink-0 space-y-4">
-            <div className="bg-blue-50 border border-blue-100 p-5 rounded-2xl text-center shadow-sm relative overflow-hidden">
-               <div className="absolute right-0 top-0 w-2 h-full bg-[#0077B6]"></div>
-               <p className="text-xs text-blue-600 font-bold uppercase tracking-widest mb-1">Thời gian triển khai mới</p>
-               <p className="text-4xl font-black text-[#003B73]">{activeStage.timeStr}</p>
+          <div className="w-full md:w-64 lg:w-72 shrink-0 flex flex-row md:flex-col gap-3 sm:gap-4 overflow-hidden">
+            <div className="flex-1 bg-blue-50 border border-blue-100 p-3 sm:p-5 rounded-xl sm:rounded-2xl text-center shadow-sm relative overflow-hidden">
+               <div className="absolute right-0 top-0 w-1 sm:w-2 h-full bg-[#0077B6]"></div>
+               <p className="text-[9px] sm:text-xs text-blue-600 font-bold uppercase tracking-widest mb-1">Thời gian mới</p>
+               <p className="text-xl sm:text-4xl font-black text-[#003B73]">{activeStage.timeStr}</p>
             </div>
-            <div className="bg-gray-50 border border-gray-200 p-5 rounded-2xl text-center flex justify-between items-center opacity-80">
-               <p className="text-xs text-gray-500 font-bold uppercase tracking-widest text-left">Cách thức<br/>cũ</p>
-               <p className="text-2xl font-bold text-gray-400 line-through shrink-0">{activeStage.oldTimeStr}</p>
+            <div className="flex-1 bg-gray-50 border border-gray-200 p-3 sm:p-5 rounded-xl sm:rounded-2xl text-center flex justify-between items-center opacity-80 gap-2">
+               <p className="text-[9px] sm:text-xs text-gray-400 font-bold uppercase tracking-widest text-left leading-tight hidden sm:block">Cách thức cũ</p>
+               <p className="text-lg sm:text-2xl font-bold text-gray-300 line-through shrink-0 m-auto sm:m-0">{activeStage.oldTimeStr}</p>
             </div>
           </div>
         </motion.div>

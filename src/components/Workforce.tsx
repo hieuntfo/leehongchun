@@ -74,112 +74,118 @@ export default function Workforce({}: WDEProps) {
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         {/* Top Reductions */}
         <div className="space-y-4">
-          <div className="flex items-center justify-between border-b border-gray-200 pb-2">
-            <h3 className="text-base font-semibold text-gray-800 flex items-center">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-gray-200 pb-2 gap-3">
+            <h3 className="text-sm sm:text-base font-semibold text-gray-800 flex items-center">
               <UserMinus size={18} className="text-red-500 mr-2" />
-              Gợi ý cắt giảm (Bottom 20% Score)
+              Gợi ý rà soát nhân sự
             </h3>
-            <div className="flex items-center space-x-2 text-sm bg-gray-50 py-1.5 px-3 rounded-lg border border-gray-200">
-              <span className="text-gray-600 font-medium">Chỉ số Công bằng (Bias Check)</span>
+            <div className="flex items-center justify-between bg-gray-50 py-1.5 px-3 rounded-lg border border-gray-200 overflow-hidden shrink-0">
+              <span className="text-[10px] sm:text-xs text-gray-600 font-medium mr-3">Chỉ số Công bằng</span>
               <button 
-                className={`w-10 h-5 rounded-full relative transition-colors ${biasCheck ? 'bg-[#003B73]' : 'bg-gray-300'}`}
+                className={`w-10 h-5 rounded-full relative transition-colors shrink-0 ${biasCheck ? 'bg-[#003B73]' : 'bg-gray-300'}`}
                 onClick={() => setBiasCheck(!biasCheck)}
               >
-                <div className={`w-4 h-4 bg-white rounded-full absolute top-0.5 transition-all ${biasCheck ? 'left-5.5' : 'left-0.5 shadow-sm'}`} />
+                <div className={`w-4 h-4 bg-white rounded-full absolute top-0.5 transition-all ${biasCheck ? 'left-5.5 shadow-sm' : 'left-0.5'}`} />
               </button>
             </div>
           </div>
 
           <AnimatePresence>
             {biasCheck && (
-              <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="bg-[#003B73] p-4 rounded-xl text-white text-sm space-y-3 shadow-md mb-4 overflow-hidden">
-                <h4 className="font-semibold flex items-center mb-2"><CheckCircle2 size={16} className="mr-2 text-green-400"/> Phân tích thiên kiến (Fairness Stats)</h4>
+              <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="bg-[#003B73] p-4 rounded-xl text-white text-xs space-y-3 shadow-md mb-4 overflow-hidden">
+                <h4 className="font-semibold flex items-center mb-2"><CheckCircle2 size={14} className="mr-2 text-green-400"/> Phân tích thiên kiến (Fairness Stats)</h4>
                 <div className="bg-white/10 p-3 rounded-lg space-y-2">
-                  <div className="flex justify-between items-center border-b border-white/10 pb-2"><span>Tỷ lệ Nữ trong danh sách:</span> <div><span className="font-bold">47%</span> <span className="text-xs text-blue-200 ml-1">(vs 52% toàn phòng)</span> <span className="text-green-300 ml-2 font-bold">✓ OK</span></div></div>
-                  <div className="flex justify-between items-center border-b border-white/10 pb-2"><span>Tỷ lệ &gt;40 tuổi:</span> <div><span className="font-bold">22%</span> <span className="text-xs text-blue-200 ml-1">(vs 25% toàn phòng)</span> <span className="text-green-300 ml-2 font-bold">✓ OK</span></div></div>
-                  <div className="flex justify-between items-center"><span>Tỷ lệ &lt;2 năm thâm niên:</span> <div><span className="font-bold text-[#FFC857]">35%</span> <span className="text-xs text-blue-200 ml-1">(vs 30% toàn phòng)</span> <span className="text-[#FFC857] ml-2 font-bold">⚠ Chú ý</span></div></div>
+                  <div className="flex justify-between items-center border-b border-white/10 pb-2 whitespace-nowrap overflow-hidden"><span>Tỷ lệ Nữ:</span> <div><span className="font-bold">47%</span> <span className="text-[10px] text-blue-200 ml-1">(vs 52% TB)</span> <span className="text-green-300 ml-1 font-bold">✓ OK</span></div></div>
+                  <div className="flex justify-between items-center border-b border-white/10 pb-2 whitespace-nowrap overflow-hidden"><span>Tỷ lệ &gt;40 tuổi:</span> <div><span className="font-bold">22%</span> <span className="text-[10px] text-blue-200 ml-1">(vs 25% TB)</span> <span className="text-green-300 ml-1 font-bold">✓ OK</span></div></div>
+                  <div className="flex justify-between items-center whitespace-nowrap overflow-hidden"><span>Tỷ lệ thâm niên &lt;2n:</span> <div><span className="font-bold text-[#FFC857]">35%</span> <span className="text-[#FFC857] ml-1 font-bold">⚠ Chú ý</span></div></div>
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
 
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-            <table className="w-full text-left bg-white">
-              <thead className="bg-gray-50/80 text-gray-600 border-b border-gray-200 text-sm">
-                <tr>
-                  <th className="p-4 font-semibold w-1/3">Nhân sự</th>
-                  <th className="p-4 font-semibold text-center">Hiệu suất</th>
-                  <th className="p-4 font-semibold text-center">Retention Score</th>
-                  <th className="p-4 font-semibold text-center w-24">Chi tiết</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100/80 text-sm">
-                {mockReductions.map((nv, i) => (
-                  <tr key={nv.id} className="hover:bg-blue-50/50 transition-colors">
-                    <td className="p-4">
-                      <div className="font-bold text-gray-900">{nv.name}</div>
-                      <div className="text-xs text-gray-500 mt-1">{nv.id} • {nv.role}</div>
-                    </td>
-                    <td className="p-4 text-center">
-                      <div className="font-medium text-gray-800">{nv.perf}</div>
-                      <div className="text-xs mt-1 px-2 py-0.5 bg-gray-100 rounded-md inline-block text-gray-600">ROI: {nv.prod}</div>
-                    </td>
-                    <td className="p-4 text-center">
-                      <div className="text-lg text-red-600 font-bold bg-red-50 py-1 rounded-lg w-16 mx-auto border border-red-100">
-                        {nv.score}
-                      </div>
-                    </td>
-                    <td className="p-4 text-center">
-                      <button 
-                        onClick={() => setSelectedShap(nv.id)}
-                        className="bg-white hover:bg-blue-50 border border-blue-200 text-[#0077B6] p-2 rounded-lg transition-colors shadow-sm focus:ring-2 focus:ring-blue-100 outline-none w-full flex justify-center items-center"
-                        title="Explainable AI"
-                      >
-                        <Search size={16} className="mr-0 xl:mr-1" />
-                        <span className="hidden xl:inline font-medium">Lý do</span>
-                      </button>
-                    </td>
+            <div className="overflow-x-auto custom-scrollbar">
+              <table className="w-full text-left min-w-[500px]">
+                <thead className="bg-gray-50/80 text-gray-600 border-b border-gray-200 text-[10px] sm:text-xs">
+                  <tr>
+                    <th className="p-3 sm:p-4 font-semibold">Nhân sự</th>
+                    <th className="p-3 sm:p-4 font-semibold text-center">Hiệu suất</th>
+                    <th className="p-3 sm:p-4 font-semibold text-center">Score</th>
+                    <th className="p-3 sm:p-4 font-semibold text-center w-24">Phân tích AI</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-gray-100/80 text-[11px] sm:text-sm">
+                  {mockReductions.map((nv) => (
+                    <tr key={nv.id} className={`hover:bg-blue-50/30 transition-colors ${selectedShap === nv.id ? 'bg-blue-50/50' : ''}`}>
+                      <td className="p-3 sm:p-4">
+                        <div className="font-bold text-gray-900 leading-tight">{nv.name}</div>
+                        <div className="text-[10px] text-gray-400 mt-1">{nv.id} • {nv.role}</div>
+                      </td>
+                      <td className="p-3 sm:p-4 text-center">
+                        <div className="font-medium text-gray-800">{nv.perf}</div>
+                        <div className="text-[9px] mt-1 px-1.5 py-0.5 bg-gray-100 rounded text-gray-500">ROI: {nv.prod}</div>
+                      </td>
+                      <td className="p-3 sm:p-4 text-center">
+                        <div className="text-sm sm:text-base text-red-600 font-bold bg-red-50 py-1 rounded w-12 sm:w-16 mx-auto border border-red-100">
+                          {nv.score}
+                        </div>
+                      </td>
+                      <td className="p-3 sm:p-4 text-center">
+                        <button 
+                          onClick={() => setSelectedShap(nv.id)}
+                          className={`p-1.5 sm:p-2 rounded-lg transition-colors shadow-sm w-full flex justify-center items-center ${
+                            selectedShap === nv.id ? 'bg-[#003B73] text-white' : 'bg-white border border-blue-200 text-[#0077B6] hover:bg-blue-50'
+                          }`}
+                        >
+                          <Search size={14} className="sm:mr-1 shrink-0" />
+                          <span className="hidden sm:inline font-medium ml-1">Lý do</span>
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
 
-         {/* Explainable AI View - Side View on Desktop, overlay on small */}
-         <div className="xl:h-full">
+         {/* Explainable AI View */}
+         <div className="xl:h-full mt-2 lg:mt-0">
           {selectedShap ? (
             <motion.div 
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
               key={selectedShap}
-              className="bg-white rounded-xl shadow-lg border border-gray-200 h-full flex flex-col overflow-hidden sticky top-6"
+              className="bg-white rounded-xl shadow-lg border border-gray-200 h-full flex flex-col overflow-hidden sticky top-4 mb-10"
             >
-              <div className="p-5 border-b border-gray-200 bg-gradient-to-r from-gray-50 to-white flex justify-between items-center">
-                <div>
-                  <h3 className="font-bold text-gray-900 flex items-center text-lg">
-                    <span className="bg-[#003B73] text-white text-xs px-2 py-1 rounded mr-3 uppercase tracking-wide font-semibold">Explainable AI</span>
-                    Giải thích quyết định
-                  </h3>
-                  <p className="text-sm text-gray-500 mt-1">Phân tích bằng thuật toán SHAP</p>
+              <div className="p-4 sm:p-5 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-white flex justify-between items-center">
+                <div className="flex items-center">
+                  <div className="bg-[#003B73] text-white text-[9px] px-2 py-1 rounded mr-3 font-bold">XAI INSIGHT</div>
+                  <h3 className="font-bold text-gray-800 text-sm sm:text-base">Giải thích lý do</h3>
                 </div>
+                <button onClick={() => setSelectedShap(null)} className="lg:hidden p-1 text-gray-400 hover:text-red-500">
+                  <X size={18} />
+                </button>
               </div>
-              <div className="p-5 flex-1 flex flex-col">
-                <div className="bg-red-50 border border-red-100 p-4 rounded-xl mb-6">
-                  <p className="text-sm text-gray-700 leading-relaxed">
-                    Vì sao <strong>{selectedEmployee.name} ({selectedEmployee.id})</strong> có Retention Score thấp mức <span className="font-bold text-red-600 text-lg mx-1">{selectedEmployee.score} / 100</span>?
+              <div className="p-4 sm:p-5 flex-1 flex flex-col overflow-y-auto max-h-[500px]">
+                <div className="bg-red-50/50 border border-red-100 p-3 sm:p-4 rounded-xl mb-6">
+                  <p className="text-[11px] sm:text-sm text-gray-700 leading-relaxed">
+                    AI phân tích: Nhân viên <strong>{selectedEmployee.name}</strong> có Retention Score thấp (<span className="font-bold text-red-600">{selectedEmployee.score}</span>). 
+                    Chi tiết thuật toán SHAP:
                   </p>
                 </div>
 
-                <div className="flex-1 min-h-[220px] w-full mb-6">
+                <div className="h-[180px] sm:h-[220px] w-full mb-6">
                   <ResponsiveContainer width="100%" height="100%">
-                    <BarChart layout="vertical" data={shapData} margin={{ top: 0, right: 30, left: 10, bottom: 0 }}>
-                      <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#E5E7EB" />
-                      <XAxis type="number" domain={[-20, 10]} stroke="#9ca3af" tick={{fontSize: 12}} />
-                      <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{ fontSize: 13, fill: '#4b5563', fontWeight: 500 }} width={120} />
-                      <Tooltip contentStyle={{ fontSize: '13px', borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} cursor={{fill: '#f1f5f9'}} />
-                      <ReferenceLine x={0} stroke="#94a3b8" strokeWidth={2} />
-                      <Bar dataKey="val" radius={4} barSize={24}>
+                    <BarChart layout="vertical" data={shapData} margin={{ top: 0, right: 10, left: -20, bottom: 0 }}>
+                      <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#f1f5f9" />
+                      <XAxis type="number" domain={[-20, 10]} hide />
+                      <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#64748b', fontWeight: 600 }} width={100} />
+                      <Tooltip 
+                        contentStyle={{ fontSize: '11px', borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} 
+                      />
+                      <ReferenceLine x={0} stroke="#cbd5e1" strokeWidth={1} />
+                      <Bar dataKey="val" radius={[0, 4, 4, 0]} barSize={16}>
                         {shapData.map((entry, index) => (
                           <Cell key={`cell-${index}`} fill={entry.val < 0 ? '#ef4444' : '#10b981'} />
                         ))}
@@ -188,26 +194,24 @@ export default function Workforce({}: WDEProps) {
                   </ResponsiveContainer>
                 </div>
                 
-                <div className="bg-gray-50 p-4 rounded-xl border border-gray-200">
-                  <h4 className="font-bold text-gray-800 text-sm mb-2">Chi tiết Tăng/Giảm điểm:</h4>
-                  <ul className="text-sm text-gray-700 space-y-2 mb-4">
-                    <li className="flex items-start"><span className="text-red-500 mr-2 mt-0.5 block">↓</span> <strong>Hiệu suất 12 tháng:</strong> 52/100 (vs TB phòng 78) → giảm 15.6 điểm</li>
-                    <li className="flex items-start"><span className="text-red-500 mr-2 mt-0.5 block">↓</span> <strong>Năng suất ROI:</strong> 0.62 (vs Benchmark 1.0) → giảm 7.4 điểm</li>
-                    <li className="flex items-start"><span className="text-red-500 mr-2 mt-0.5 block">↓</span> <strong>Kỹ năng chiến lược:</strong> Kỹ năng test thủ công (Manual QC) đang bị thay thế bởi Automated Testing → giảm 5.2 điểm</li>
+                <div className="bg-gray-50/80 p-3 sm:p-4 rounded-xl border border-gray-100">
+                  <h4 className="font-bold text-gray-800 text-[10px] sm:text-xs mb-3 uppercase tracking-wider">Trọng số đóng góp</h4>
+                  <ul className="text-[11px] sm:text-sm text-gray-700 space-y-2.5 mb-5">
+                    <li className="flex items-start"><span className="text-red-500 mr-2 mt-0.5 font-black">↓</span> <span className="flex-1"><strong>Hiệu suất:</strong> 52/100 (vs TB 78) → giảm 15.6đ</span></li>
+                    <li className="flex items-start"><span className="text-red-500 mr-2 mt-0.5 font-black">↓</span> <span className="flex-1"><strong>ROI:</strong> 0.62 (vs Bench 1.0) → giảm 7.4đ</span></li>
+                    <li className="flex items-start"><span className="text-red-500 mr-2 mt-0.5 font-black">↓</span> <span className="flex-1"><strong>Kỹ năng:</strong> Manual QC đang bị thay thế → giảm 5.2đ</span></li>
                   </ul>
                   
-                  <div className="bg-blue-50 text-blue-800 p-3 rounded-lg text-sm border border-blue-100 flex items-start">
-                    <Info size={16} className="text-blue-500 mr-2 mt-0.5 flex-shrink-0" />
-                    <p><strong>Khuyến nghị AI:</strong> Cân nhắc <em>upskilling</em> sang vai trò Automation Engineer (đào tạo 6 tháng) thay vì sa thải ngay do thâm niên đóng góp 8 năm hiểu rõ nghiệp vụ (domain knowledge).</p>
+                  <div className="bg-blue-50 text-blue-800 p-3 rounded-lg text-[11px] sm:text-sm border border-blue-100 flex items-start shadow-sm">
+                    <Info size={14} className="text-blue-500 mr-2 mt-0.5 flex-shrink-0" />
+                    <p className="leading-relaxed"><strong>AI khuyên:</strong> Cân nhắc <em>đào tạo lại</em> thành Automation Engineer thay vì sa thải do có thâm niên và nghiệp vụ tốt.</p>
                   </div>
                 </div>
               </div>
             </motion.div>
           ) : (
-            <div className="bg-gray-50 rounded-xl border border-gray-200 border-dashed h-full min-h-[400px] flex flex-col items-center justify-center text-gray-400 p-8 text-center mt-4 xl:mt-0">
-              <Search size={48} className="mb-4 text-gray-300" />
-              <p className="font-medium text-lg text-gray-500 mb-2">Chọn một nhân sự để xem giải thích</p>
-              <p className="text-sm">Hệ thống sẽ dùng Explainable AI (SHAP) để giải thích sự đóng góp của từng tiêu chí vào điểm số cuối cùng.</p>
+            <div className="bg-gray-50 rounded-xl border-2 border-gray-200 border-dashed h-[150px] lg:h-full flex flex-col items-center justify-center text-gray-400 p-6 text-center sticky top-4">
+              <p className="text-sm">Chọn nhân viên để xem phân tích AI</p>
             </div>
           )}
         </div>
