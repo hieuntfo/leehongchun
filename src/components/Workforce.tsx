@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { AlertTriangle, Info, Search, X, CheckCircle2, SlidersHorizontal, UserMinus } from 'lucide-react';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, ReferenceLine } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, ReferenceLine, CartesianGrid } from 'recharts';
 
 const mockReductions = [
   { id: 'NV001245', name: 'Nguyễn Văn A', role: 'Chuyên viên Manual QC', perf: '52/100', prod: '0.62', strat: 'Test thủ công', score: 34.2 },
