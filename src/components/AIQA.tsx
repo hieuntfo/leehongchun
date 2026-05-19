@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Send, Bot, User, Sparkles, BarChart2 } from 'lucide-react';
+import { Send, Bot, User, Sparkles, BarChart2, Database } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
 
 const mockChartData = [
@@ -12,12 +12,21 @@ export default function AIQA() {
   const [messages, setMessages] = useState<{ role: 'user' | 'bot'; text: string; hasChart?: boolean }[]>([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isTyping]);
 
   const suggestions = [
     "Doanh thu công ty con SX-1 tháng này so với cùng kỳ năm ngoái?",
-    "Top 5 khách hàng đóng góp doanh thu lớn nhất 2025?",
-    "Tồn kho hàng nào sắp hết hạn trong 30 ngày?",
-    "Năng suất trung bình của khối back-office quý này?"
+    "Công ty con nào đang lỗ thực sự (sau khi loại trừ giao dịch nội bộ)?",
+    "Top 5 sản phẩm mang lại biên lợi nhuận (gross margin) cao nhất quý 3?",
+    "Dự báo doanh thu Quý 4 sẽ đạt bao nhiêu? Có nên cắt giảm Marketing?"
   ];
 
   const handleAsk = (question: string) => {
@@ -30,54 +39,66 @@ export default function AIQA() {
       if (question === suggestions[0]) {
         setMessages(prev => [...prev, { 
           role: 'bot', 
-          text: "Công ty con SX-1 đạt **47.3 tỷ** doanh thu tháng 5/2026, **tăng 18.2%** so với tháng 5/2025 (40.0 tỷ). \n\nĐóng góp chính từ đơn hàng XK Nhật Bản (+12 tỷ) và sản phẩm mới ABC (+3 tỷ).\n\n_[Dữ liệu: BRAVO 10 ERP, cập nhật lúc 09:32 hôm nay]_",
+          text: "Công ty con **SX-1** đạt **47.3 tỷ** doanh thu tháng 5/2026, **tăng 18.2%** so với cùng kỳ (40.0 tỷ).\n\nĐóng góp chính:\n• Đơn hàng XK Nhật Bản: +12 tỷ\n• Sản phẩm mới Tôn mạ kẽm cao cấp: +3 tỷ\n\n_[Nguồn: BRAVO 10 ERP, Kho dữ liệu hợp nhất. Cập nhật: 09:32 hôm nay]_",
           hasChart: true
         }]);
       } else {
         setMessages(prev => [...prev, { 
           role: 'bot', 
-          text: "Hiện tại tôi mới được huấn luyện kỹ trên dữ liệu câu đầu tiên cho buổi demo này. Vui lòng thử lại với câu hỏi về SX-1 nhé! 😊" 
+          text: "Tại bản demo này, tôi được lập trình để trả lời chi tiết cho câu hỏi đầu tiên. Anh vui lòng chọn câu hỏi đầu tiên để xem khả năng giải thích và vẽ biểu đồ từ dữ liệu ERP nhé! 😊" 
         }]);
       }
-    }, 1000);
+    }, 1200);
   };
 
   return (
-    <div className="flex flex-col h-screen bg-[#F8FAFC]">
+    <div className="flex flex-col h-[calc(100vh-8rem)] bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden relative max-w-5xl mx-auto">
       {/* Header */}
-      <div className="bg-[#003B73] px-4 py-4 text-white shadow-md z-10 sticky top-0">
-        <h1 className="font-bold text-lg flex items-center">
-          <Sparkles size={18} className="mr-2 text-[#FFC857]" />
-          Hỏi BRAVO AI
-        </h1>
-        <p className="text-xs text-blue-200">Trợ lý phân tích dữ liệu trực tiếp từ ERP</p>
+      <div className="bg-[#003B73] px-6 py-4 text-white z-10 flex justify-between items-center shrink-0">
+        <div>
+          <h1 className="font-bold text-xl flex items-center">
+            <Bot size={24} className="mr-3 text-[#FFC857]" />
+            AI Q&A — "Hỏi BRAVO"
+          </h1>
+          <p className="text-sm text-blue-200 mt-1 flex items-center">
+            <Database size={14} className="mr-1.5" />
+            Truy vấn ngôn ngữ tự nhiên (NLP) trên nền tảng Decision Intelligence Layer
+          </p>
+        </div>
+        <div className="hidden sm:flex items-center space-x-2 text-xs font-medium text-white/80 bg-black/20 px-3 py-1.5 rounded-lg border border-white/10">
+          <Sparkles size={14} className="text-[#FFC857]" />
+          <span>Generative AI (GPT-4o) + Dữ liệu ERP nội bộ</span>
+        </div>
       </div>
 
       {/* Chat Area */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 pb-32">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
         <AnimatePresence>
           {messages.length === 0 && (
             <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="mt-4"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, transition: { duration: 0.2 } }}
+              className="mt-8 max-w-3xl mx-auto"
             >
-              <div className="text-center space-y-2 mb-6">
-                <div className="w-12 h-12 rounded-full bg-blue-100 mx-auto flex items-center justify-center text-[#0077B6]">
-                  <Bot size={24} />
+              <div className="text-center space-y-4 mb-10">
+                <div className="w-16 h-16 rounded-2xl bg-blue-50 border border-blue-100 mx-auto flex items-center justify-center text-[#003B73] shadow-sm transform -rotate-3">
+                  <Bot size={32} />
                 </div>
-                <h2 className="text-gray-800 font-semibold text-lg">Hôm nay anh cần báo cáo gì?</h2>
-                <p className="text-xs text-gray-500 max-w-[250px] mx-auto">Chạm vào gợi ý hoặc nhập câu hỏi bằng ngôn ngữ tự nhiên.</p>
+                <h2 className="text-gray-900 font-bold text-2xl">Xin chào Chủ tịch,</h2>
+                <p className="text-gray-500 text-base max-w-md mx-auto leading-relaxed">
+                  Trợ lý AI đã được kết nối với toàn bộ dữ liệu hợp nhất 10 công ty con của Tập đoàn BRAVO. Anh cần báo cáo thông tin gì hôm nay?
+                </p>
               </div>
               
-              <div className="grid grid-cols-1 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-8">
                 {suggestions.map((s, i) => (
                   <button 
                     key={i}
                     onClick={() => handleAsk(s)}
-                    className="bg-white text-left p-3 rounded-xl border border-blue-100 text-sm text-gray-700 hover:border-[#0077B6] hover:text-[#003B73] transition-colors shadow-sm"
+                    className="bg-white text-left p-4 rounded-xl border border-gray-200 text-sm text-gray-700 hover:border-[#0077B6] hover:shadow-md hover:-translate-y-0.5 transition-all"
                   >
+                    <div className="font-medium text-[#003B73] mb-1">Ví dụ {i+1}</div>
                     {s}
                   </button>
                 ))}
@@ -90,38 +111,44 @@ export default function AIQA() {
               key={i}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className={`flex flex-col ${m.role === 'user' ? 'items-end' : 'items-start'}`}
+              className={`flex flex-col ${m.role === 'user' ? 'items-end' : 'items-start'} max-w-3xl mx-auto`}
             >
-              <div className="flex items-end mb-1">
+              <div className="flex items-start max-w-full">
                 {m.role === 'bot' && (
-                  <div className="w-6 h-6 rounded-full bg-[#003B73] text-white flex items-center justify-center mr-2 flex-shrink-0">
-                    <Bot size={14} />
+                  <div className="w-8 h-8 rounded-lg bg-[#003B73] text-white flex items-center justify-center mr-3 flex-shrink-0 mt-1">
+                    <Bot size={18} />
                   </div>
                 )}
+                {m.role === 'user' && (
+                  <div className="w-8 h-8 rounded-full bg-gray-200 border-2 border-white shadow-sm overflow-hidden ml-3 flex-shrink-0 mt-1 order-2">
+                     <img src="https://ui-avatars.com/api/?name=Nguyen+Van+A&background=0077B6&color=fff" alt="Avatar" />
+                  </div>
+                )}
+                
                 <div 
-                  className={`p-3 rounded-2xl max-w-[85%] text-sm shadow-sm ${
+                  className={`p-4 text-base shadow-sm leading-relaxed order-1 ${
                     m.role === 'user' 
-                      ? 'bg-[#0077B6] text-white rounded-br-sm' 
-                      : 'bg-white border border-gray-100 text-gray-800 rounded-bl-sm whitespace-pre-wrap'
+                      ? 'bg-[#0077B6] text-white rounded-2xl rounded-tr-md ml-12' 
+                      : 'bg-gray-50 border border-gray-200 text-gray-800 rounded-2xl rounded-tl-md whitespace-pre-wrap mr-12 w-full'
                   }`}
-                  dangerouslySetInnerHTML={m.role === 'bot' ? { __html: m.text.replace(/\*\*(.*?)\*\*/g, '<strong class="text-gray-900">$1</strong>').replace(/_(.*?)_/g, '<em class="text-gray-400 text-xs">$1</em>') } : { __html: m.text }}
+                  dangerouslySetInnerHTML={m.role === 'bot' ? { __html: m.text.replace(/\*\*(.*?)\*\*/g, '<strong class="text-gray-900">$1</strong>').replace(/_(.*?)_/g, '<em class="text-gray-500 text-sm italic inline-block mt-3">$1</em>') } : { __html: m.text }}
                 />
               </div>
 
               {m.hasChart && (
-                <div className="ml-8 mt-2 bg-white p-3 rounded-xl border border-gray-100 shadow-sm w-[85%] max-w-[280px]">
-                  <h4 className="text-xs font-semibold text-gray-600 mb-2 flex items-center">
-                    <BarChart2 size={12} className="mr-1" />
-                    So sánh doanh thu T5 (Tỷ ₫)
+                <div className="ml-11 mt-3 bg-white p-5 rounded-2xl border border-gray-200 shadow-sm w-full max-w-[400px]">
+                  <h4 className="text-sm font-bold text-gray-800 mb-4 flex items-center">
+                    <BarChart2 size={16} className="mr-2 text-[#0077B6]" />
+                    So sánh doanh thu T5/2026 (Tỷ ₫)
                   </h4>
-                  <div className="h-32 w-full">
+                  <div className="h-48 w-full">
                     <ResponsiveContainer width="100%" height="100%">
                       <BarChart data={mockChartData} margin={{ top: 5, right: 5, left: -25, bottom: 0 }}>
                         <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
-                        <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#888' }} dy={5} />
-                        <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 10, fill: '#888' }} />
-                        <Tooltip cursor={{ fill: '#f8fafc' }} contentStyle={{ borderRadius: '8px', fontSize: '10px' }} />
-                        <Bar dataKey="rev" fill="#0077B6" radius={[4, 4, 0, 0]} />
+                        <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#6b7280', fontWeight: 500 }} dy={10} />
+                        <YAxis axisLine={false} tickLine={false} tick={{ fontSize: 11, fill: '#6b7280' }} />
+                        <Tooltip cursor={{ fill: '#f8fafc' }} contentStyle={{ borderRadius: '8px', fontSize: '13px', border: '1px solid #e2e8f0', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }} />
+                        <Bar dataKey="rev" fill="#0077B6" radius={[4, 4, 0, 0]} maxBarSize={60} />
                       </BarChart>
                     </ResponsiveContainer>
                   </div>
@@ -134,40 +161,46 @@ export default function AIQA() {
              <motion.div 
                initial={{ opacity: 0 }}
                animate={{ opacity: 1 }}
-               className="flex items-end mb-1"
+               className="flex items-start max-w-3xl mx-auto"
              >
-               <div className="w-6 h-6 rounded-full bg-[#003B73] text-white flex items-center justify-center mr-2 flex-shrink-0">
-                  <Bot size={14} />
+               <div className="w-8 h-8 rounded-lg bg-[#003B73] text-white flex items-center justify-center mr-3 flex-shrink-0 mt-1">
+                  <Bot size={18} />
                </div>
-               <div className="bg-white border border-gray-100 p-3 rounded-2xl rounded-bl-sm flex space-x-1 shadow-sm">
-                 <div className="w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce"></div>
-                 <div className="w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                 <div className="w-1.5 h-1.5 bg-gray-300 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+               <div className="bg-gray-50 border border-gray-200 p-4 rounded-2xl rounded-tl-md flex space-x-2 shadow-sm items-center h-[52px]">
+                 <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                 <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.15s' }}></div>
+                 <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.3s' }}></div>
                </div>
              </motion.div>
           )}
+          
+          <div ref={messagesEndRef} />
         </AnimatePresence>
       </div>
 
       {/* Input Area */}
-      <div className="bg-white p-3 border-t border-gray-100 fixed bottom-16 left-0 right-0 max-w-[420px] mx-auto z-20">
-        <div className="flex items-center bg-gray-100 rounded-full px-4 py-2">
+      <div className="bg-white p-4 border-t border-gray-200 shrink-0">
+        <div className="max-w-3xl mx-auto flex items-center bg-gray-50 border border-gray-200 rounded-full px-5 py-2.5 focus-within:ring-2 focus-within:ring-blue-100 focus-within:border-[#0077B6] transition-all shadow-inner">
           <input 
             type="text" 
-            placeholder="Hỏi BRAVO bất cứ điều gì..." 
-            className="flex-1 bg-transparent text-sm text-gray-800 outline-none placeholder:text-gray-400"
+            placeholder="Viết câu hỏi bằng ngôn ngữ tiếng Việt tự nhiên..." 
+            className="flex-1 bg-transparent text-base text-gray-800 outline-none placeholder:text-gray-400"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && input.trim() && handleAsk(input)}
+            autoFocus
           />
           <button 
-            className={`ml-2 p-1.5 rounded-full transition-colors ${input.trim() ? 'bg-[#0077B6] text-white' : 'bg-gray-200 text-gray-400'}`}
+            className={`ml-3 p-2.5 rounded-full transition-all flex items-center justify-center ${input.trim() ? 'bg-[#0077B6] text-white hover:bg-[#005B8C] shadow-md hover:-translate-y-0.5' : 'bg-gray-200 text-gray-400'}`}
             onClick={() => input.trim() && handleAsk(input)}
             disabled={!input.trim() || isTyping}
           >
-            <Send size={16} />
+            <Send size={18} className={input.trim() ? 'translate-x-0.5' : ''}/>
           </button>
         </div>
+        <p className="text-center text-[11px] text-gray-400 mt-3">
+          Decision Intelligence Layer đảm bảo bảo mật dữ liệu ở mức hàng (Row-level Security). Chỉ hiển thị dữ liệu người dùng có quyền truy cập.
+        </p>
       </div>
     </div>
   );
